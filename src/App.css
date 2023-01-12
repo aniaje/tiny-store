@@ -31,3 +31,8 @@
   width: 50px;
   padding: 3px;
 }
+
+.Purchase-display-line {
+  display: flex;
+  justify-content: center;
+}

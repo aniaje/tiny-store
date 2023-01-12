@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import { IProduct } from "./types";
+import { Product } from "./components/Product";
+import { PurchaseDisplay } from "./components/PurchaseDisplay";
 
-interface Product {
-  name: string;
-  image: string;
-  price: number;
-}
-
-const initialProducts: Product[] = [
+const initialProducts: IProduct[] = [
   { name: "Ottie", image: "./images/book1.jpg", price: 30 },
   {
     name: "Harry",
@@ -31,26 +28,23 @@ function App() {
     price: 0,
   });
 
+  const handlePurchase = (product: IProduct) => {
+    setProductBought(product);
+    setIsProductBought(true);
+  };
+
   return (
     <>
-      <h1>Tiny Store</h1>
-
-      <div className={"App-container"}>
-        {products.map((product) => {
-          return (
-            <div className={"App-item"}>
-              <div>
-                <img src={product.image} alt={product.name} />
-              </div>
-              <div className={"Price-item"}>price ${product.price}</div>
-              <div className={"Product-name-container"}>
-                <h3> {product.name}</h3>
-                <button className={"App-button"}>buy</button>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <h1 className="Tiny-store">Tiny Store</h1>
+      {isProductBought ? (
+        <PurchaseDisplay productPurchased={productBought} />
+      ) : (
+        <div className={"App-container"}>
+          {products.map((product) => {
+            return <Product product={product} onBuy={handlePurchase} />;
+          })}
+        </div>
+      )}
     </>
   );
 }
